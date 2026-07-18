@@ -1,0 +1,424 @@
+/* =========================================================
+   Login — FitTrack Pro
+   Reutiliza las variables de :root definidas en style.css
+   (colores, fuentes, radios). Este archivo solo agrega lo
+   propio de la pantalla de autenticación.
+   ========================================================= */
+
+.auth-body {
+    min-height: 100vh;
+    background: var(--cream);
+}
+
+.auth-wrapper {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    min-height: 100vh;
+}
+
+/* ---------------------------------------------------------
+   Panel de marca (izquierda)
+   --------------------------------------------------------- */
+
+.auth-panel {
+    position: relative;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 3rem 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.auth-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--white);
+    position: relative;
+    z-index: 2;
+    width: fit-content;
+}
+
+.auth-logo strong {
+    color: var(--lime);
+    font-weight: 800;
+}
+
+.auth-panel-content {
+    position: relative;
+    z-index: 2;
+    max-width: 30rem;
+}
+
+.auth-panel-content .eyebrow {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lime);
+    border: 1px solid var(--line);
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+}
+
+.auth-panel-content h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(2.4rem, 4vw, 3.4rem);
+    line-height: 1.02;
+    color: var(--white);
+}
+
+.auth-panel-content h1 span {
+    display: block;
+    color: var(--lime);
+}
+
+.auth-panel-content p {
+    margin-top: 1.25rem;
+    color: var(--gray);
+    max-width: 34ch;
+}
+
+.auth-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+    padding-top: 1.75rem;
+    border-top: 1px dashed var(--line);
+    list-style: none;
+}
+
+.auth-stat-num {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.9rem;
+    color: var(--lime);
+}
+
+.auth-stat-label {
+    display: block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    margin-top: 0.2rem;
+}
+
+/* Carriles decorativos, coherentes con el motivo de pista */
+.auth-lanes {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.auth-lanes span {
+    position: absolute;
+    top: -20%;
+    bottom: -20%;
+    width: 1px;
+    background: var(--line);
+    transform: rotate(var(--lane-angle));
+}
+
+.auth-lanes span:nth-child(1) { left: 62%; }
+.auth-lanes span:nth-child(2) { left: 74%; }
+.auth-lanes span:nth-child(3) { left: 86%; }
+.auth-lanes span:nth-child(4) { left: 98%; }
+
+/* ---------------------------------------------------------
+   Panel de formulario (derecha)
+   --------------------------------------------------------- */
+
+.auth-form-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+}
+
+.auth-form-card {
+    width: 100%;
+    max-width: 26rem;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gray);
+    margin-bottom: 2.25rem;
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: var(--coral);
+}
+
+.auth-form-card h2 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(1.8rem, 3vw, 2.3rem);
+}
+
+.auth-subtitle {
+    color: var(--gray);
+    margin-top: 0.5rem;
+    margin-bottom: 2.25rem;
+}
+
+/* Campos */
+
+.field {
+    margin-bottom: 1.4rem;
+}
+
+.field label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.field input[type="email"],
+.field input[type="password"],
+.field input[type="text"] {
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    padding: 0.85rem 1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(16, 19, 20, 0.15);
+    background: var(--white);
+    color: var(--ink);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field input::placeholder {
+    color: #a7acb3;
+}
+
+.field input:focus {
+    outline: none;
+    border-color: var(--lime-dim);
+    box-shadow: 0 0 0 3px rgba(200, 255, 77, 0.25);
+}
+
+.field.has-error input {
+    border-color: var(--coral);
+}
+
+.field.has-error input:focus {
+    box-shadow: 0 0 0 3px rgba(255, 90, 71, 0.2);
+}
+
+.field-error {
+    display: block;
+    min-height: 1.1rem;
+    font-size: 0.8rem;
+    color: var(--coral-dim);
+    margin-top: 0.4rem;
+}
+
+.password-field {
+    position: relative;
+}
+
+.password-field input {
+    padding-right: 2.75rem;
+}
+
+.password-field button {
+    position: absolute;
+    top: 50%;
+    right: 0.6rem;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--gray);
+    cursor: pointer;
+    padding: 0.4rem;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.password-field button:hover {
+    color: var(--ink);
+}
+
+/* Fila remember / forgot */
+
+.form-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.checkbox input {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--lime-dim);
+}
+
+.link-muted {
+    color: var(--gray);
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.link-muted:hover {
+    color: var(--coral);
+}
+
+/* Botón */
+
+.btn-block {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+}
+
+.btn-block:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.btn-block .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: var(--white);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Divider */
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.75rem 0 1.25rem;
+    color: var(--gray);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(16, 19, 20, 0.12);
+}
+
+/* OAuth */
+
+.oauth-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+}
+
+.btn-oauth {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(16, 19, 20, 0.15);
+    background: var(--white);
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-oauth:hover {
+    border-color: var(--ink);
+    transform: translateY(-2px);
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: var(--gray);
+}
+
+.auth-switch a {
+    color: var(--coral);
+    font-weight: 700;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* ---------------------------------------------------------
+   Responsive
+   --------------------------------------------------------- */
+
+@media (max-width: 960px) {
+    .auth-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-panel {
+        padding: 2.5rem 1.75rem;
+    }
+
+    .auth-panel-content {
+        max-width: none;
+    }
+
+    .auth-stats {
+        gap: 1.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-form-panel {
+        padding: 2.5rem 1.25rem;
+    }
+
+    .oauth-row {
+        grid-template-columns: 1fr;
+    }
+}

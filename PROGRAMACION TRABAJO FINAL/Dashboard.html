@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | FitTrack Pro</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- CSS: tokens/base de style.css + estilos propios del dashboard -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body class="dash-body">
+
+    <div class="dash-layout">
+
+        <!-- ===================== SIDEBAR ===================== -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <a href="index.html" class="sidebar-logo">
+                <span class="logo-mark"><i class="fa-solid fa-dumbbell"></i></span>
+                <span>FitTrack <strong>Pro</strong></span>
+            </a>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-view="overview">
+                    <i class="fa-solid fa-gauge"></i> <span data-i18n="nav.dashboard">Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-view="gym">
+                    <i class="fa-solid fa-dumbbell"></i> <span data-i18n="nav.gym">Gym Tracker</span>
+                </a>
+                <a href="#" class="nav-item" data-view="running">
+                    <i class="fa-solid fa-person-running"></i> <span data-i18n="nav.running">Running</span>
+                </a>
+                <a href="#" class="nav-item" data-view="overview" data-scroll-to="statsPanels">
+                    <i class="fa-solid fa-chart-line"></i> <span data-i18n="nav.stats">Estadísticas</span>
+                </a>
+                <a href="#" class="nav-item" data-view="overview" data-scroll-to="achievementsPanel">
+                    <i class="fa-solid fa-trophy"></i> <span data-i18n="nav.achievements">Logros</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <a href="#" class="nav-item" data-view="settings">
+                    <i class="fa-solid fa-gear"></i> <span data-i18n="nav.settings">Configuración</span>
+                </a>
+                <a href="login.html" class="nav-item logout" id="logoutBtn">
+                    <i class="fa-solid fa-right-from-bracket"></i> <span data-i18n="nav.logout">Cerrar sesión</span>
+                </a>
+            </div>
+
+        </aside>
+
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- ===================== CONTENIDO ===================== -->
+
+        <div class="dash-main">
+
+            <header class="topbar">
+
+                <button id="sidebarToggle" class="sidebar-toggle" aria-label="Abrir menú" aria-expanded="false">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <label class="topbar-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Buscar ejercicio, rutina..." data-i18n-placeholder="search.placeholder">
+                </label>
+
+                <div class="topbar-actions">
+                    <button class="icon-btn" aria-label="Notificaciones">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="badge-dot" aria-hidden="true"></span>
+                    </button>
+                    <div class="user-chip">
+                        <span class="user-avatar" id="userAvatar">?</span>
+                        <span class="user-name" id="userNameLabel">Invitado</span>
+                    </div>
+                </div>
+
+            </header>
+
+            <main class="dash-content">
+
+                <div class="dash-heading">
+                    <div>
+                        <h1 id="greeting">Hola</h1>
+                        <p data-i18n="heading.subtitle">Este es tu resumen de la semana.</p>
+                    </div>
+
+                    <div class="quick-add" id="quickAdd">
+                        <button type="button" class="btn-primary" id="quickAddBtn">
+                            <i class="fa-solid fa-plus"></i> <span data-i18n="quickadd.button">Nuevo entrenamiento</span>
+                        </button>
+                        <div class="quick-add-menu" id="quickAddMenu">
+                            <button type="button" data-view="gym">
+                                <i class="fa-solid fa-dumbbell"></i> <span data-i18n="quickadd.gym">Registrar gimnasio</span>
+                            </button>
+                            <button type="button" data-view="running">
+                                <i class="fa-solid fa-person-running"></i> <span data-i18n="quickadd.running">Registrar carrera</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== VISTA: OVERVIEW ===================== -->
+
+                <section class="dash-view active" id="view-overview">
+
+                    <!-- STAT CARDS -->
+                    <section class="stat-grid">
+
+                        <div class="stat-card">
+                            <div class="stat-icon icon-lime"><i class="fa-solid fa-dumbbell"></i></div>
+                            <div>
+                                <h2><span class="count" id="statWorkouts" data-target="0">0</span></h2>
+                                <p data-i18n="stat.workouts">Entrenamientos esta semana</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon icon-coral"><i class="fa-solid fa-fire"></i></div>
+                            <div>
+                                <h2><span class="count" id="statCalories" data-target="0" data-format="es-CO">0</span></h2>
+                                <p data-i18n="stat.calories">Calorías quemadas</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon icon-lime"><i class="fa-solid fa-route"></i></div>
+                            <div>
+                                <h2><span class="count" id="statDistance" data-target="0" data-decimals="1">0</span><span data-i18n="stat.km"> km</span></h2>
+                                <p data-i18n="stat.distance">Distancia recorrida</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon icon-coral"><i class="fa-solid fa-bolt"></i></div>
+                            <div>
+                                <h2><span class="count" id="statStreak" data-target="0">0</span><span data-i18n="stat.days"> días</span></h2>
+                                <p data-i18n="stat.streakLabel">Racha actual</p>
+                            </div>
+                        </div>
+
+                    </section>
+
+                    <!-- CHART + GOALS -->
+                    <section class="dash-grid" id="statsPanels">
+
+                        <div class="panel activity-panel">
+
+                            <div class="panel-head">
+                                <h2 data-i18n="panel.weeklyActivity">Actividad semanal</h2>
+                                <select aria-label="Rango de fechas" disabled>
+                                    <option data-i18n="panel.thisWeek">Esta semana</option>
+                                </select>
+                            </div>
+
+                            <div class="bar-chart" id="barChart" role="img" aria-label="Minutos de actividad por día de la semana">
+                                <div class="bar" data-day="0"><span class="bar-fill"></span><label>Lun</label></div>
+                                <div class="bar" data-day="1"><span class="bar-fill"></span><label>Mar</label></div>
+                                <div class="bar" data-day="2"><span class="bar-fill"></span><label>Mié</label></div>
+                                <div class="bar" data-day="3"><span class="bar-fill"></span><label>Jue</label></div>
+                                <div class="bar" data-day="4"><span class="bar-fill"></span><label>Vie</label></div>
+                                <div class="bar" data-day="5"><span class="bar-fill"></span><label>Sáb</label></div>
+                                <div class="bar" data-day="6"><span class="bar-fill"></span><label>Dom</label></div>
+                            </div>
+
+                        </div>
+
+                        <div class="panel goals-panel">
+
+                            <h2 data-i18n="panel.weeklyGoals">Objetivos de la semana</h2>
+
+                            <ul class="goal-list" id="goalList">
+                                <!-- generado por JS -->
+                            </ul>
+
+                        </div>
+
+                    </section>
+
+                    <!-- HISTORIAL + LOGROS -->
+                    <section class="dash-grid dash-grid-2">
+
+                        <div class="panel">
+
+                            <div class="panel-head">
+                                <h2 data-i18n="panel.recentWorkouts">Entrenamientos recientes</h2>
+                            </div>
+
+                            <ul class="workout-list" id="recentWorkouts">
+                                <!-- generado por JS -->
+                            </ul>
+
+                        </div>
+
+                        <div class="panel" id="achievementsPanel">
+
+                            <div class="panel-head">
+                                <h2 data-i18n="panel.achievements">Logros</h2>
+                            </div>
+
+                            <div class="badge-grid" id="badgeGrid">
+                                <!-- generado por JS -->
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </section>
+
+                <!-- ===================== VISTA: GYM TRACKER ===================== -->
+
+                <section class="dash-view" id="view-gym">
+
+                    <section class="dash-grid gym-grid">
+
+                        <div class="panel">
+
+                            <div class="panel-head">
+                                <h2 data-i18n="panel.chooseExercises">Elige tus ejercicios</h2>
+                            </div>
+
+                            <div class="exercise-categories" id="exerciseLibrary">
+                                <!-- generado por JS -->
+                            </div>
+
+                        </div>
+
+                        <div class="panel">
+
+                            <div class="panel-head">
+                                <h2 data-i18n="panel.todayRoutine">Tu rutina de hoy</h2>
+                            </div>
+
+                            <div id="routineEmpty" class="empty-state">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                                <p data-i18n="empty.routine">Agrega ejercicios desde la izquierda para armar tu rutina.</p>
+                            </div>
+
+                            <div class="routine-list" id="routineList"></div>
+
+                            <form id="gymForm">
+                                <div class="form-row-2">
+                                    <div class="form-field">
+                                        <label for="gymDuration" data-i18n="form.duration">Duración (min)</label>
+                                        <input type="number" id="gymDuration" min="1" placeholder="45" required>
+                                    </div>
+                                    <div class="form-field">
+                                        <label for="gymCalories" data-i18n="form.caloriesOptional">Calorías (opcional)</label>
+                                        <input type="number" id="gymCalories" min="0" placeholder="Estimado automático" data-i18n-placeholder="form.calorieAuto">
+                                    </div>
+                                </div>
+                                <span class="field-error" id="gymFormError" role="alert"></span>
+                                <button type="submit" class="btn-primary btn-block">
+                                    <i class="fa-solid fa-check"></i> <span data-i18n="form.saveWorkout">Guardar entrenamiento</span>
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </section>
+
+                </section>
+
+                <!-- ===================== VISTA: RUNNING ===================== -->
+
+                <section class="dash-view" id="view-running">
+
+                    <section class="dash-grid running-grid">
+
+                        <div class="panel">
+
+                            <div class="panel-head">
+                                <h2 data-i18n="panel.registerRun">Registrar carrera</h2>
+                            </div>
+
+                            <form id="runForm">
+
+                                <div class="form-field">
+                                    <label for="runDate" data-i18n="form.date">Fecha</label>
+                                    <input type="date" id="runDate" required>
+                                </div>
+
+                                <div class="form-row-2">
+                                    <div class="form-field">
+                                        <label for="runDistance" data-i18n="form.distanceKm">Distancia (km)</label>
+                                        <input type="number" id="runDistance" step="0.01" min="0.1" placeholder="5.0" required>
+                                    </div>
+                                    <div class="form-field">
+                                        <label for="runDuration" data-i18n="form.duration">Duración (min)</label>
+                                        <input type="number" id="runDuration" min="1" placeholder="30" required>
+                                    </div>
+                                </div>
+
+                                <div class="run-summary" id="runSummary">
+                                    <div class="run-summary-item">
+                                        <span class="val" id="runPace">--</span>
+                                        <span class="lbl" data-i18n="run.pace">Ritmo min/km</span>
+                                    </div>
+                                    <div class="run-summary-item">
+                                        <span class="val" id="runCalories">--</span>
+                                        <span class="lbl" data-i18n="run.calories">Kcal estimadas</span>
+                                    </div>
+                                    <div class="run-summary-item">
+                                        <span class="val" id="runSpeed">--</span>
+                                        <span class="lbl" data-i18n="run.speed">Km/h</span>
+                                    </div>
+                                </div>
+
+                                <span class="field-error" id="runFormError" role="alert"></span>
+
+                                <button type="submit" class="btn-primary btn-block">
+                                    <i class="fa-solid fa-check"></i> <span data-i18n="form.saveRun">Guardar carrera</span>
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                        <div class="panel">
+
+                            <div class="panel-head">
+                                <h2 data-i18n="panel.runHistory">Historial de carreras</h2>
+                            </div>
+
+                            <ul class="workout-list" id="runHistory">
+                                <!-- generado por JS -->
+                            </ul>
+
+                        </div>
+
+                    </section>
+
+                </section>
+
+                <!-- ===================== VISTA: CONFIGURACIÓN ===================== -->
+
+                <section class="dash-view" id="view-settings">
+
+                    <section class="dash-grid dash-grid-2">
+
+                        <div class="panel">
+                            <div class="panel-head">
+                                <h2 data-i18n="settings.language">Idioma</h2>
+                            </div>
+                            <p class="settings-desc" data-i18n="settings.languageDesc">Elige el idioma de la aplicación.</p>
+                            <div class="lang-toggle" id="langToggle">
+                                <button type="button" class="lang-btn" data-lang="es">Español</button>
+                                <button type="button" class="lang-btn" data-lang="en">English</button>
+                            </div>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panel-head">
+                                <h2 data-i18n="settings.appearance">Apariencia</h2>
+                            </div>
+                            <div class="switch-row">
+                                <div>
+                                    <p class="switch-title" data-i18n="settings.darkMode">Modo oscuro</p>
+                                    <p class="settings-desc" data-i18n="settings.darkModeDesc">Reduce el brillo con un tema más oscuro.</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="darkModeToggle">
+                                    <span class="switch-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </section>
+
+                    <section class="dash-grid dash-grid-2">
+
+                        <div class="panel">
+                            <div class="panel-head">
+                                <h2 data-i18n="settings.userData">Datos del usuario</h2>
+                            </div>
+
+                            <form id="settingsForm">
+                                <div class="form-field">
+                                    <label for="settingsName" data-i18n="settings.name">Nombre completo</label>
+                                    <input type="text" id="settingsName" required>
+                                </div>
+                                <div class="form-field">
+                                    <label for="settingsEmail" data-i18n="settings.email">Correo electrónico</label>
+                                    <input type="email" id="settingsEmail" disabled>
+                                </div>
+                                <div class="form-field">
+                                    <label for="settingsGoal" data-i18n="settings.goal">Meta principal</label>
+                                    <select id="settingsGoal">
+                                        <option value="perder-peso" data-i18n="goal.loseWeight">Perder peso</option>
+                                        <option value="ganar-musculo" data-i18n="goal.gainMuscle">Ganar músculo</option>
+                                        <option value="resistencia" data-i18n="goal.endurance">Resistencia</option>
+                                        <option value="mantenerme-activo" data-i18n="goal.stayActive">Mantenerme activo</option>
+                                    </select>
+                                </div>
+                                <span class="field-error" id="settingsFormMsg" role="alert"></span>
+                                <button type="submit" class="btn-primary btn-block">
+                                    <i class="fa-solid fa-check"></i> <span data-i18n="settings.save">Guardar cambios</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panel-head">
+                                <h2 data-i18n="settings.training">Entrenamiento</h2>
+                            </div>
+                            <p class="settings-desc" data-i18n="settings.progressiveDesc">
+                                Incremento por defecto (kg) que se usa al generar series con sobrecarga progresiva:
+                                si no sabes cuánto vas a levantar, la app arma tus series subiendo el peso poco a poco
+                                (ej. 20, 22, 25, 30 kg) y tú puedes ajustar cada una.
+                            </p>
+                            <div class="form-field">
+                                <label for="defaultIncrement" data-i18n="settings.increment">Incremento por serie (kg)</label>
+                                <input type="number" id="defaultIncrement" min="0" step="0.5" value="2.5">
+                            </div>
+                        </div>
+
+                    </section>
+
+                </section>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- JS -->
+    <script src="JS/dashboard.js"></script>
+
+</body>
+
+</html>

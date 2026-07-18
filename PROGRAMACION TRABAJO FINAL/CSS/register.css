@@ -1,0 +1,142 @@
+/* =========================================================
+   Register — FitTrack Pro
+   Se apoya en style.css (tokens) y login.css (layout de auth,
+   .field, .password-field, .btn-block, .divider, .oauth-row...).
+   Aquí solo lo que es exclusivo de este formulario.
+   ========================================================= */
+
+/* El form de registro es más largo: dale un poco más de aire
+   a la tarjeta y deja que el panel scrollee si hace falta. */
+.auth-form-panel {
+    align-items: flex-start;
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+}
+
+/* ---------------------------------------------------------
+   Medidor de fuerza de contraseña
+   --------------------------------------------------------- */
+
+.strength-meter {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.35rem;
+    margin-top: 0.6rem;
+}
+
+.strength-meter span {
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(16, 19, 20, 0.1);
+    transition: background 0.25s ease;
+}
+
+.strength-meter.level-1 span:nth-child(1) { background: var(--coral); }
+
+.strength-meter.level-2 span:nth-child(1),
+.strength-meter.level-2 span:nth-child(2) { background: #f5a623; }
+
+.strength-meter.level-3 span:nth-child(1),
+.strength-meter.level-3 span:nth-child(2),
+.strength-meter.level-3 span:nth-child(3) { background: var(--lime-dim); }
+
+.strength-meter.level-4 span { background: var(--lime-dim); }
+
+.field-hint {
+    display: block;
+    font-size: 0.76rem;
+    color: var(--gray);
+    margin-top: 0.4rem;
+}
+
+/* ---------------------------------------------------------
+   Tarjetas de meta principal
+   --------------------------------------------------------- */
+
+.goal-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.goal-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: 10px;
+    border: 1px solid rgba(16, 19, 20, 0.12);
+    background: var(--white);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.goal-card input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.goal-card i {
+    color: var(--gray);
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.goal-card:hover {
+    border-color: rgba(16, 19, 20, 0.3);
+}
+
+.goal-card:has(input:checked) {
+    border-color: var(--lime-dim);
+    background: rgba(200, 255, 77, 0.12);
+}
+
+.goal-card:has(input:checked) i {
+    color: var(--ink);
+}
+
+.goal-card:has(input:focus-visible) {
+    outline: 2px solid var(--lime-dim);
+    outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------
+   Checkbox de términos (multilínea)
+   --------------------------------------------------------- */
+
+.terms-checkbox {
+    align-items: flex-start;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--gray);
+    line-height: 1.5;
+}
+
+.terms-checkbox input {
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+.terms-checkbox a {
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.terms-checkbox a:hover {
+    color: var(--coral);
+}
+
+/* ---------------------------------------------------------
+   Responsive
+   --------------------------------------------------------- */
+
+@media (max-width: 480px) {
+    .goal-cards {
+        grid-template-columns: 1fr;
+    }
+}
